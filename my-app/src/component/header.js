@@ -12,7 +12,7 @@ const styles = {
 export default function Header(){
     return(
         <header style = {styles.head} >
-            hi
+            <h1>Snake</h1>
         </header>
     )
 }
