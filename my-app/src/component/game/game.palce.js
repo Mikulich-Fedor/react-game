@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Snake from './snake'
+import Food from './food'
 
 const stules = {
     plase: {
@@ -12,21 +13,111 @@ const stules = {
     }
 }
 
+const getRandomXY = () => {
+    let min = 1;
+    let max = 98;
+    let x = Math.floor(Math.random() * (max - min + 1) / 2 ) * 2;
+    let y = Math.floor(Math.random() * (max - min + 2) / 2 ) * 2;
+  return [x, y]
+}
+
+
+const initialGame = {
+    food: getRandomXY(),
+    speed: 1000,
+    direction: "Right",
+    snakeDots: [
+        [0,0],
+        [2,0],
+        [4,0]
+    ]
+}
+
 class GamePlace extends Component {
     
     // eslint-disable-next-line no-undef
-    state = {
-        snakeDots: [
-            [0,0],
-            [0,2],
-            [0,4]
-        ]
+    state = initialGame ;
+
+    componentDidMount(){
+        setInterval(() => {
+            this.moveSnake()
+        }, this.state.speed);
+        this.moveSnake();
+        document.onkeydown = this.onKeyDown;
+    }
+
+    componentDidUpdate(){
+        this.border();
+    }
+
+    // eslint-disable-next-line no-undef
+    onKeyDown = (e) => {
+        e = e || window.event;
+        switch (e.keyCode) {
+            case 37:
+                this.setState({direction: "Left"});
+             break; 
+             case 38:
+                this.setState({direction: "Up"});
+             break;
+             case 39:
+                this.setState({direction: "Right"});
+             break;
+             case 40:
+                this.setState({direction: "Down"});
+             break;
+                
+            default:
+            break;
+        }
+    }
+
+    // eslint-disable-next-line no-undef
+    moveSnake = () => {
+        let dots = [...this.state.snakeDots];
+        let head = dots[dots.length - 1];
+
+
+        switch(this.state.direction){
+            case "Left":
+                head = [ head[0] - 2, head[1] ]
+            break;
+            case "Up":
+                head = [ head[0], head[1] - 2 ]
+            break;
+            case "Right":
+                head = [ head[0] + 2, head[1] ]
+            break;
+            case "Down":
+                head = [ head[0], head[1] + 2 ]
+            break;
+            default:
+            break;
+        }
+        dots.push(head);
+        dots.shift();
+        this.setState({
+            snakeDots: dots
+        })
+    }
+
+    border(){
+        let head = this.state.snakeDots[this.state.snakeDots.length - 1]
+        if(head[0] >= 100 || head[0] < 0  || head[1] >= 100 || head[1] < 0){
+            this.gameOver()
+        }
+    }
+
+    gameOver(){
+        alert(`Game over ${this.state.snakeDots.length}`)
+        this.setState(initialGame)
     }
 
     render(){
         return(
             <div style = {stules.plase}>
                 <Snake snakeDots = {this.state.snakeDots} />
+                <Food dot = {this.state.food} />
             </div>
         )
     }

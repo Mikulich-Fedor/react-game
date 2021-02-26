@@ -8,8 +8,8 @@ function Snake(props){
             props.snakeDots.map((dot , i) => {
 
                 const styles = {
-                    top: `${dot[0]}%`,
-                    left: `${dot[1]}%`
+                    top: `${dot[1]}%`,
+                    left: `${dot[0]}%`
                 }
 
                 return(
