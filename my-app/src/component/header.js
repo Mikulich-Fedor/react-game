@@ -6,6 +6,7 @@ const styles = {
         height: "10vh",
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#53a9dbab"
     }
 }
 

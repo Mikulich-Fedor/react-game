@@ -25,4 +25,73 @@ code {
   height: 100vh;
   margin: 0 auto;
 }
+/* nav */
+.nav{
+  display: flex;
+  flex-direction: column;
+  height: 30%;
+  width: 25%;
+  align-items: center;
+  justify-content: space-around;
+}
+.linkNav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 35px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+  color: rgb(0, 0, 0);
+  transition: all .2s;
+  background-color: #53a9dbab;
+  cursor: pointer;
+}
+.linkNav:hover{
+  transform: scale(1.01);
+}
+.linkNav:active{
+  transform: scale(0.99);
+}
 
+/* title */
+.svgImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 515px;
+  width: 550px;
+}
+.svgPath{
+  fill: #53a9db;
+  stroke: #53a9db;
+  stroke-dasharray: 6105;
+}
+
+.svgPath{
+  cursor: pointer;
+  animation: snake 3s ease-in .9s infinite ;
+
+}
+
+@keyframes snake {
+  0%{
+    stroke-dashoffset: 0;
+  }
+  40%{
+    stroke-dashoffset: 6105;
+    stroke: #f230ec;
+  }
+  80%{
+    stroke-dashoffset: 12110;
+    fill: transparent;
+  }
+  100%{
+    stroke-dashoffset: 12110;
+    stroke: #53a9db;
+    fill: #53a9dbab;
+  }
+}

@@ -24,7 +24,7 @@ const getRandomXY = () => {
 
 const initialGame = {
     food: getRandomXY(),
-    speed: 1000,
+    speed: 100,
     direction: "Right",
     snakeDots: [
         [0,0],
@@ -47,7 +47,10 @@ class GamePlace extends Component {
     }
 
     componentDidUpdate(){
+        
+        this.eatFood();
         this.border();
+        this.checkTail();
     }
 
     // eslint-disable-next-line no-undef
@@ -99,6 +102,39 @@ class GamePlace extends Component {
         this.setState({
             snakeDots: dots
         })
+    }
+
+    eatFood(){
+        let food = this.state.food;
+        let head = this.state.snakeDots[this.state.snakeDots.length - 1];
+
+        if(food[0] === head[0] && food[1] === head[1]){
+            this.setState({
+                food: getRandomXY()
+            })
+            this.newSnake()
+        }
+    }
+
+    checkTail(){
+        let snake = [...this.state.snakeDots];
+        let head = snake[snake.length - 1];
+        snake.pop();
+
+        snake.forEach(dot => {
+            if(dot[0] === head[0] && dot[1] === head[1]){
+                this.gameOver()
+            }
+        })
+    }
+
+    newSnake(){
+        let newSnake = [...this.state.snakeDots];
+        newSnake.unshift([])
+        console.log(newSnake)
+        this.setState({
+            snakeDots: newSnake
+        }) 
     }
 
     border(){
