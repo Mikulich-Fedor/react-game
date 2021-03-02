@@ -69,9 +69,7 @@ code {
   fill: #53a9db;
   stroke: #53a9db;
   stroke-dasharray: 6105;
-}
-
-.svgPath{
+  stroke-width: 3;
   cursor: pointer;
   animation: snake 3s ease-in .9s infinite ;
 
@@ -86,11 +84,9 @@ code {
     stroke: #f230ec;
   }
   80%{
-    stroke-dashoffset: 12110;
     fill: transparent;
   }
   100%{
-    stroke-dashoffset: 12110;
     stroke: #53a9db;
     fill: #53a9dbab;
   }

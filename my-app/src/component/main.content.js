@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 
+// eslint-disable-next-line no-unused-vars
 import GamePlace from './game/game.palce'
 import Nav from './nav'
 import Title from './title'
@@ -14,44 +15,62 @@ const styles = {
     }
 }
 
-class Main extends Component {
+class Main extends Component {   
 
     constructor(props){
         super(props)
-        this.state = {}
-    }
-
-    componentDidMount(){
-        document.onclick = this.clickEvent;
-    }
-    componentDidUpdate(){
-    }
-
-    // eslint-disable-next-line no-undef
-    clickEvent = (e) => {
-        e = window.event
-        console.log([e.target.innerText])
-        switch(e.target.innerText){
-            case "Start":
-                console.log("go Start")
-            break;
-            case "level":
-                console.log("go level")
-            break;
-            
-            default:
-            break;
+        this.state = {   
+            level: 120,
+            game: "stop",
+            component: [
+                <Title />,
+                <Nav hendler = {this.hendlerGame} />,
+            ]
         }
     }
 
+    // eslint-disable-next-line no-undef
+    hendlerGame = (checkGame, checklevel) => {
+        this.setState({
+            game: checkGame,
+            level: checklevel
+        })
+        if(checkGame === "play"){
+     
+            this.setState({
+                component: [
+                    <GamePlace finish={this.finish} level={checklevel}  />
+                ]
+            })
+        }
+    }
 
-
+    // eslint-disable-next-line no-undef
+    finish = (finish) => {
+          if(finish === "finish"){
+            this.setState({
+                component: [
+                    <Title />,
+                    <Nav hendler = {this.hendlerGame} />
+                ]
+            })
+          }
+    }
+    
+ 
     render (){
         return(
+            
             <main style = {styles.main}>
-                <Title />
-                <Nav />
-                {/* <GamePlace /> */}
+
+            { 
+                this.state.component.map((elem,i) => {
+                    return(
+                        <slot key={i}>{elem}</slot>
+                    )
+                })
+            }           
+                
             </main>
         )
     }

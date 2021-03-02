@@ -22,21 +22,25 @@ const getRandomXY = () => {
 }
 
 
-const initialGame = {
-    food: getRandomXY(),
-    speed: 100,
-    direction: "Right",
-    snakeDots: [
-        [0,0],
-        [2,0],
-        [4,0]
-    ]
+const initialGame = (speeds) => {
+    return({
+        food: getRandomXY(),
+        speed: speeds,
+        direction: "Right",
+        snakeDots: [
+            [0,0],
+            [2,0],
+            [4,0]
+        ]
+    }
+    )
+   
 }
 
 class GamePlace extends Component {
     
     // eslint-disable-next-line no-undef
-    state = initialGame ;
+    state = initialGame(this.props.level) ;
 
     componentDidMount(){
         setInterval(() => {
@@ -44,6 +48,7 @@ class GamePlace extends Component {
         }, this.state.speed);
         this.moveSnake();
         document.onkeydown = this.onKeyDown;
+        console.log(this.state)
     }
 
     componentDidUpdate(){
@@ -146,8 +151,13 @@ class GamePlace extends Component {
 
     gameOver(){
         alert(`Game over ${this.state.snakeDots.length}`)
+        this.props.finish("finish")
+    }
+    componentWillUnmount(){
         this.setState(initialGame)
     }
+
+    
 
     render(){
         return(
