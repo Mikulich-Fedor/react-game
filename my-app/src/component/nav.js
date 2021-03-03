@@ -4,7 +4,7 @@ class Nav extends Component {
     // eslint-disable-next-line no-undef
     state = {
         menu : [
-            "start","level","record"
+            "start","level"
         ],
         level: 120
     }
@@ -32,7 +32,7 @@ class Nav extends Component {
             })
             this.props.hendler("stop", this.state.level)
         } else if (elem === "back"){
-            this.setState({menu:["start","level","record"]})
+            this.setState({menu:["start","level"]})
         }
     }
 
